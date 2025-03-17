@@ -1,0 +1,6 @@
+{
+    // ...existing settings...
+    "css.validate": false,
+    "tailwindCSS.validate": true
+    // ...existing settings...
+}

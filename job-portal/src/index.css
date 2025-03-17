@@ -1,0 +1,131 @@
+/* @import 'tailwindcss/base'; */
+@tailwind base;
+/* @import 'tailwindcss/components'; */
+@tailwind components;
+/* @import 'tailwindcss/utilities'; */
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+/* Make sure the registration page has the correct height */
+@media (min-width: 768px) {
+  .register-container {
+    height: calc(100vh - 64px); /* Subtract navbar height */
+    display: flex;
+    overflow: hidden; /* Prevent scrolling */
+  }
+  
+  .register-form {
+    height: 100%;
+    overflow-y: auto;
+    padding: 2rem;
+  }
+  
+  .register-image {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .register-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Changed from contain to cover */
+    max-height: 100vh;
+  }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 767px) {
+  .register-image {
+    height: 40vh;
+  }
+  
+  .register-form {
+    padding: 1.5rem;
+  }
+}
+
+/* Custom cursor styles */
+html, body {
+  cursor: none;
+}
+
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.2s ease;
+}
+
+.custom-cursor.default {
+  background-color: #3B82F6; /* Blue color for default */
+}
+
+.custom-cursor.footer {
+  background-color: #FFFF00; /* Yellow color for footer */
+}
+
+/* Hide cursor on clickable elements to show browser default */
+a, button, input, select, textarea, [role="button"] {
+  cursor: none;
+}
+
+a:hover, button:hover, [role="button"]:hover {
+  cursor: none;
+}
+
+/* Add this CSS comment to help IDE recognition */
+/* This file uses Tailwind CSS: https://tailwindcss.com */
+
+/* Dark mode styles */
+.dark {
+  background-color: #121212;
+  color: #FFFFFF;
+}
+
+.dark .bg-white {
+  background-color: #1E1E1E;
+}
+
+.dark .text-gray-600,
+.dark .text-gray-700,
+.dark .text-gray-800,
+.dark .text-gray-900 {
+  color: #A0AEC0;
+}
+
+.dark .border-gray-300 {
+  border-color: #2D3748;
+}
+
+.dark .bg-blue-500 {
+  background-color: #2C5282;
+}
+
+.dark .bg-blue-900 {
+  background-color: #1A365D;
+}
+
+.dark .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+/* Transition for smooth theme switching */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

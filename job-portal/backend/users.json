@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "username": "vidi",
+    "email": "vidi@gmail.com",
+    "password": "$2b$12$JYZIRlnoRQKdLoG1A0HTCexLOMNIefJ9DbwKahEXjqYq/2pNPUqyK",
+    "dob": "2002-01-01"
+  },
+  {
+    "id": "2",
+    "username": "weps",
+    "email": "weps@gmail.com",
+    "password": "$2b$12$G2A3q8UJglINWY/1t61h4eVkC/DF//u5/hSQBfCveiqMj.ez77qCi",
+    "dob": "2002-01-01"
+  },
+  {
+    "id": "3",
+    "username": "shiv",
+    "email": "shiv@gmail.com",
+    "password": "$2b$12$CVQ2H2BdGXFABs0gU3QFieL1Ijkn/txlOQp3IS0nLuo1HD5O4xRkG",
+    "dob": "2001-02-21"
+  }
+]
