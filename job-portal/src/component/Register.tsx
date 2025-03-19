@@ -45,7 +45,7 @@ export default function Register() {
   };
   
   // Animation variants
-  const formVariants = {
+  /* const formVariants = {
     initial: { opacity: 0, x: 30 },
     animate: { 
       opacity: 1, 
@@ -55,7 +55,7 @@ export default function Register() {
         ease: "easeOut"
       }
     }
-  };
+  }; */
   
   const inputVariants = {
     initial: { opacity: 0, y: 10 },
