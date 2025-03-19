@@ -19,6 +19,15 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
 
+    // Validate form
+    if (!formData.username || !formData.email || !formData.password) {
+      toast.error('Username, email, and password are required');
+      setLoading(false);
+      return;
+    }
+
+    console.log('Registering with data:', formData);
+
     try {
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -29,16 +38,32 @@ export default function Register() {
       });
 
       const data = await response.json();
+      console.log('Registration response:', data);
 
       if (!response.ok) {
         throw new Error(data.message || 'Registration failed');
       }
 
-      toast.success('Registration successful');
-      navigate('/login');
+      toast.success('Registration successful! You can now log in.');
+      
+      // Redirect to login page after a short delay
+      setTimeout(() => {
+        navigate('/login');
+      }, 1500);
     } catch (error) {
       console.error('Registration error:', error);
-      toast.error(error instanceof Error ? error.message : 'Registration failed');
+      
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Registration failed. Please try again.');
+      }
+      
+      // Show additional information
+      toast('Make sure your username and email are unique', {
+        icon: '⚠️',
+        duration: 5000
+      });
     } finally {
       setLoading(false);
     }

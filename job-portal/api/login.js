@@ -1,10 +1,11 @@
 // Login API for Vercel
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
+
+// Secret key for JWT (should be in environment variables in production)
+const SECRET_KEY = 'your-secret-key-here';
 
 // Our users data - in a real app this would be a database
-const users = [
+const defaultUsers = [
   {
     id: 1,
     username: "user",
@@ -32,8 +33,9 @@ const users = [
   }
 ];
 
-// Secret key for JWT (should be in environment variables in production)
-const SECRET_KEY = 'your-secret-key-here';
+// Use global variable to store registered users across function invocations
+// Note: This is just for demo purposes - in production, use a database
+global.registeredUsers = global.registeredUsers || [];
 
 module.exports = (req, res) => {
   // Set CORS headers
@@ -62,11 +64,17 @@ module.exports = (req, res) => {
     return res.status(400).json({ message: 'Username and password are required' });
   }
 
+  // Combine default users with registered users
+  const allUsers = [...defaultUsers, ...global.registeredUsers];
+
   // Find user
-  const user = users.find(u => u.username === username);
+  const user = allUsers.find(u => 
+    (u.username === username && u.password === password) ||
+    (u.email === username && u.password === password)
+  );
   
   // Verify credentials
-  if (!user || user.password !== password) {
+  if (!user) {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
 

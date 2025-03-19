@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const SECRET_KEY = 'your-secret-key-here';
 
 // Our users data - in a real app this would be a database
-const users = [
+const defaultUsers = [
   {
     id: 1,
     username: "user",
@@ -32,8 +32,16 @@ const users = [
   }
 ];
 
-// Variable to keep track of new user IDs
-let nextId = users.length + 1;
+// Initialize global variable for registered users
+global.registeredUsers = global.registeredUsers || [];
+
+// Calculate next ID based on both default and registered users
+const getNextId = () => {
+  const allUsers = [...defaultUsers, ...global.registeredUsers];
+  return allUsers.length > 0 
+    ? Math.max(...allUsers.map(user => user.id)) + 1 
+    : 1;
+};
 
 module.exports = (req, res) => {
   // Set CORS headers
@@ -63,18 +71,21 @@ module.exports = (req, res) => {
     return res.status(400).json({ message: 'Username, email, and password are required' });
   }
 
+  // Get all users by combining default and registered
+  const allUsers = [...defaultUsers, ...global.registeredUsers];
+
   // Check if user already exists
-  if (users.some(user => user.username === username)) {
+  if (allUsers.some(user => user.username === username)) {
     return res.status(400).json({ message: 'Username already exists' });
   }
 
-  if (users.some(user => user.email === email)) {
+  if (allUsers.some(user => user.email === email)) {
     return res.status(400).json({ message: 'Email already exists' });
   }
 
   // Create new user
   const newUser = {
-    id: nextId++,
+    id: getNextId(),
     username,
     email,
     password, // In a real app, this should be hashed
@@ -82,8 +93,10 @@ module.exports = (req, res) => {
     category: category || ''
   };
 
-  // Add to "database"
-  users.push(newUser);
+  // Add to global "database"
+  global.registeredUsers.push(newUser);
+
+  console.log('Registered users:', global.registeredUsers);
 
   // Generate token so they can be logged in right away
   const token = jwt.sign(

@@ -48,7 +48,22 @@ export default function Login() {
       navigate('/jobs');
     } catch (error: any) {
       console.error('Login error:', error);
-      toast.error(error.response?.data?.message || 'Login failed. Please try again.');
+      
+      // More detailed error handling
+      if (error.response) {
+        const message = error.response.data?.message || 'Login failed';
+        toast.error(message);
+        
+        // Show helpful tips for invalid credentials
+        if (error.response.status === 401) {
+          toast('Make sure your username and password are correct', { icon: '⚠️', duration: 5000 });
+          toast('Try the demo users: user/password or john/john123', { icon: '💡', duration: 5000 });
+        }
+      } else if (error.request) {
+        toast.error('Network error. Please check your connection.');
+      } else {
+        toast.error('Login failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
