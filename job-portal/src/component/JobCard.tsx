@@ -82,7 +82,7 @@ export default function JobCard({ job, isSaved, isApplied, onSaveToggle, onApply
       }
       
       // Call the API to apply for the job
-      await axios.post('http://localhost:5000/apply', 
+      await axios.post('/api/apply', 
         { jobId: job.id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -163,7 +163,7 @@ export default function JobCard({ job, isSaved, isApplied, onSaveToggle, onApply
             <span className="font-bold text-gray-800">{lpa} LPA</span>
           </motion.div>
         </div>
-        
+
         {/* Job Title with animation */}
         <motion.h2 
           className="text-lg font-bold text-gray-800 mb-3"
@@ -174,10 +174,10 @@ export default function JobCard({ job, isSaved, isApplied, onSaveToggle, onApply
         </motion.h2>
         
         {/* Skills with animation */}
-        <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-4">
           {job.skills.slice(0, 5).map((skill, index) => (
             <motion.span 
-              key={index}
+                key={index}
               className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
               variants={skillVariants}
               whileHover="hover"
@@ -186,12 +186,12 @@ export default function JobCard({ job, isSaved, isApplied, onSaveToggle, onApply
                 color: isHovered ? headerColor : "#1E40AF"
               }}
               transition={{ delay: index * 0.05 }}
-            >
-              {skill}
+              >
+                {skill}
             </motion.span>
-          ))}
-        </div>
-        
+            ))}
+          </div>
+
         {/* Posted and Expired */}
         <div className="flex items-center text-sm text-gray-500 mb-3">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -200,15 +200,15 @@ export default function JobCard({ job, isSaved, isApplied, onSaveToggle, onApply
           <span>{job.posted}</span>
         </div>
         
-        {job.expires && (
+              {job.expires && (
           <div className="flex items-center text-sm text-red-500 mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <span>{job.expires}</span>
           </div>
-        )}
-      </div>
+              )}
+            </div>
       
       {/* Application Status and Actions */}
       <div className="p-4 border-t border-gray-100 bg-gray-50 mt-auto">
@@ -246,7 +246,7 @@ export default function JobCard({ job, isSaved, isApplied, onSaveToggle, onApply
               <span className="text-sm">{applied ? "Applied" : "Not Applied"}</span>
             </div>
           </div>
-          
+
           <motion.button
             onClick={handleApply}
             disabled={applying || applied}

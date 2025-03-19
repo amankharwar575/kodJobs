@@ -51,16 +51,16 @@ export default function Jobs() {
 
         // Fetch jobs, saved jobs, and applied jobs
         const [jobsRes, savedRes, appliedRes] = await Promise.all([
-          axios.get('http://localhost:5000/jobs', {
+          axios.get('/api/jobs', {
             headers: { Authorization: `Bearer ${token}` },
             params: { search, location: locationFilter }
           }),
-          axios.get('http://localhost:5000/saved-jobs', {
+          axios.get('/api/saved-jobs', {
             headers: { Authorization: `Bearer ${token}` }
           }),
-          axios.get('http://localhost:5000/applications', {
+          axios.get('/api/applications', {
             headers: { Authorization: `Bearer ${token}` }
-          })
+          }).catch(() => ({ data: [] })) // Fallback for applications endpoint
         ]);
 
         // Process job data
@@ -225,11 +225,11 @@ export default function Jobs() {
                     </div>
                     <motion.input
                       id="search"
-                      type="text"
+            type="text"
                       placeholder="Search by title, skills, or company..."
                       className="pl-10 p-3 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
                       whileFocus={{ scale: 1.01, boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.3)" }}
                     />
                   </div>
@@ -245,14 +245,14 @@ export default function Jobs() {
                     </div>
                     <motion.input
                       id="location"
-                      type="text"
+            type="text"
                       placeholder="Filter by city, state, or country..."
                       className="pl-10 p-3 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      value={locationFilter}
-                      onChange={(e) => setLocationFilter(e.target.value)}
+            value={locationFilter}
+            onChange={(e) => setLocationFilter(e.target.value)}
                       whileFocus={{ scale: 1.01, boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.3)" }}
-                    />
-                  </div>
+          />
+        </div>
                 </div>
               </div>
             </div>
@@ -297,11 +297,11 @@ export default function Jobs() {
                 custom={index}
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
               >
-                <JobCard
-                  job={job}
-                  isSaved={savedJobs.has(job.id)}
+            <JobCard
+              job={job}
+              isSaved={savedJobs.has(job.id)}
                   isApplied={appliedJobs.has(job.id)}
-                  onSaveToggle={handleSaveToggle}
+              onSaveToggle={handleSaveToggle}
                   onApplyToggle={handleApplyToggle}
                 />
               </motion.div>

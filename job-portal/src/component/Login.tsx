@@ -36,7 +36,7 @@ export default function Login() {
     setLoading(true);
     
     try {
-      const response = await axios.post('http://localhost:5000/login', {
+      const response = await axios.post('/api/login', {
         username,
         password
       });
@@ -49,10 +49,10 @@ export default function Login() {
     } catch (error: any) {
       console.error('Login error:', error);
       toast.error(error.response?.data?.message || 'Login failed. Please try again.');
-      } finally {
-        setLoading(false);
-      }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Animation variants
   const gridVariants = {
